@@ -168,7 +168,12 @@
         const detailState = {
           groupIndex: null,
           workIndex: null,
+          ignoreCloseUntil: 0,
+          loadToken: 0,
+          closeTimer: null,
         };
+        const OPENABLE_DISTANCE = 2.45;
+        const DIRECT_OPEN_DISTANCE = 2.8;
 
         if (logo) {
           logo.src = assets.logo || "个人网站要用到的所有资料。/艺术家签名的logo。.jpg";
@@ -278,11 +283,21 @@
         });
 
         if (detailBackdrop) {
-          detailBackdrop.addEventListener("click", closeDetail);
+          detailBackdrop.addEventListener("click", function () {
+            if (performance.now() < detailState.ignoreCloseUntil) {
+              return;
+            }
+            closeDetail();
+          });
         }
 
         if (detailShell) {
-          detailShell.addEventListener("click", closeDetail);
+          detailShell.addEventListener("click", function () {
+            if (performance.now() < detailState.ignoreCloseUntil) {
+              return;
+            }
+            closeDetail();
+          });
         }
 
         document.addEventListener("keydown", function (event) {
@@ -341,6 +356,7 @@
             lastPointerTime: 0,
             dragVelocity: 0,
             inertiaVelocity: 0,
+            pressedCardIndex: null,
             autoResumeAt: 1800 + groupIndex * 300,
             autoDirection: groupIndex % 2 === 0 ? 1 : -1,
             suppressClickUntil: 0,
@@ -377,6 +393,7 @@
               return;
             }
 
+            const targetCard = event.target && event.target.closest ? event.target.closest(".orbit-card") : null;
             state.pointerDown = true;
             state.dragMoved = false;
             state.startX = event.clientX;
@@ -385,6 +402,10 @@
             state.lastPointerTime = event.timeStamp || performance.now();
             state.dragVelocity = 0;
             state.inertiaVelocity = 0;
+            state.pressedCardIndex =
+              targetCard && state.track.contains(targetCard)
+                ? Number(targetCard.getAttribute("data-work-index") || "0")
+                : null;
             pauseAuto(state);
             viewport.setPointerCapture(event.pointerId);
           });
@@ -395,8 +416,9 @@
             }
 
             const deltaX = event.clientX - state.startX;
-            if (Math.abs(deltaX) > 4) {
+            if (Math.abs(deltaX) > (touchMode ? 6 : 10)) {
               state.dragMoved = true;
+              state.pressedCardIndex = null;
             }
 
             state.target = state.startTarget - deltaX / 175;
@@ -410,16 +432,48 @@
             state.lastPointerTime = now;
           });
 
-          function releasePointer() {
+          function releasePointer(event) {
             if (!state.pointerDown) {
               return;
             }
 
             state.pointerDown = false;
             if (state.dragMoved) {
-              state.suppressClickUntil = performance.now() + 280;
+              state.suppressClickUntil = performance.now() + 120;
               state.inertiaVelocity = state.dragVelocity * (touchMode ? 2.4 : 2.1);
             } else {
+              const pointerIndex =
+                state.pressedCardIndex !== null
+                  ? state.pressedCardIndex
+                  : (() => {
+                      const hit =
+                        event && typeof event.clientX === "number" && typeof event.clientY === "number"
+                          ? document.elementFromPoint(event.clientX, event.clientY)
+                          : null;
+                      const card = hit && hit.closest ? hit.closest(".orbit-card") : null;
+                      return card && state.track.contains(card)
+                        ? Number(card.getAttribute("data-work-index") || "0")
+                        : null;
+                    })();
+
+              state.pressedCardIndex = null;
+
+              if (pointerIndex !== null) {
+                const index = pointerIndex;
+                const distanceToFront = Math.abs(wrapDelta(index - state.current, state.group.works.length));
+                state.suppressClickUntil = performance.now() + 320;
+
+                if (distanceToFront < DIRECT_OPEN_DISTANCE) {
+                  state.target = getNearestTarget(state, index);
+                  openDetail(state.groupIndex, index);
+                  return;
+                }
+
+                pauseAuto(state);
+                state.target = snapTargetToIndex(state, index);
+                return;
+              }
+
               state.target = Math.round(state.target);
             }
           }
@@ -473,7 +527,7 @@
 
               const index = Number(card.getAttribute("data-work-index") || "0");
               const distanceToFront = Math.abs(wrapDelta(index - state.current, state.group.works.length));
-              if (distanceToFront < 1.9) {
+              if (distanceToFront < DIRECT_OPEN_DISTANCE) {
                 state.target = getNearestTarget(state, index);
                 openDetail(state.groupIndex, index);
                 return;
@@ -585,7 +639,7 @@
             );
             card.classList.toggle("is-active", index === state.activeIndex);
             card.classList.toggle("is-near", absDelta < 1.36);
-            card.classList.toggle("is-openable", absDelta < 1.9);
+            card.classList.toggle("is-openable", absDelta < OPENABLE_DISTANCE);
           });
         }
 
@@ -637,10 +691,13 @@
             return;
           }
 
+          if (detailState.closeTimer) {
+            clearTimeout(detailState.closeTimer);
+            detailState.closeTimer = null;
+          }
+
           detailState.groupIndex = groupIndex;
           detailState.workIndex = getWrappedIndex(workIndex, group.works.length);
-          detailImage.src = work.image;
-          detailImage.alt = work.alt;
           detailTitle.textContent = work.titleZh || work.title;
           detailTitle.classList.toggle("zh-font", hasHan(detailTitle.textContent));
           detailTitleZh.textContent = work.title && work.title !== work.titleZh ? work.title : "";
@@ -648,9 +705,44 @@
           detailTitleZh.classList.toggle("zh-font", hasHan(detailTitleZh.textContent));
           detailLine.textContent = [work.mediumZh || work.medium, work.size, work.year].filter(Boolean).join(" / ");
           detailLine.classList.toggle("zh-font", hasHan(detailLine.textContent));
+          detailState.ignoreCloseUntil = performance.now() + 360;
+          detail.classList.remove("is-closing");
           detail.classList.add("is-open");
+          detail.classList.add("is-loading");
           detail.setAttribute("aria-hidden", "false");
           document.body.classList.add("has-detail-open");
+
+          const loadToken = ++detailState.loadToken;
+          detailImage.classList.remove("is-ready");
+          detailImage.alt = work.alt;
+          detailImage.removeAttribute("src");
+
+          const preloader = new Image();
+          preloader.decoding = "async";
+          preloader.src = work.image;
+
+          function commitImage() {
+            if (loadToken !== detailState.loadToken) {
+              return;
+            }
+
+            detailImage.src = work.image;
+            detailImage.alt = work.alt;
+            requestAnimationFrame(function () {
+              if (loadToken !== detailState.loadToken) {
+                return;
+              }
+              detail.classList.remove("is-loading");
+              detailImage.classList.add("is-ready");
+            });
+          }
+
+          if (typeof preloader.decode === "function") {
+            preloader.decode().then(commitImage).catch(commitImage);
+          } else {
+            preloader.onload = commitImage;
+            preloader.onerror = commitImage;
+          }
         }
 
         function closeDetail() {
@@ -658,11 +750,26 @@
             return;
           }
 
+          detailImage.classList.remove("is-ready");
+          detail.classList.remove("is-open");
+          detail.classList.remove("is-loading");
+          detail.classList.add("is-closing");
           detailState.groupIndex = null;
           detailState.workIndex = null;
-          detail.classList.remove("is-open");
-          detail.setAttribute("aria-hidden", "true");
+          detailState.ignoreCloseUntil = 0;
+          detailState.loadToken += 1;
           document.body.classList.remove("has-detail-open");
+
+          if (detailState.closeTimer) {
+            clearTimeout(detailState.closeTimer);
+          }
+
+          detailState.closeTimer = setTimeout(function () {
+            detail.classList.remove("is-closing");
+            detail.setAttribute("aria-hidden", "true");
+            detailImage.removeAttribute("src");
+            detailState.closeTimer = null;
+          }, 380);
         }
 
         function pauseAuto(state) {
