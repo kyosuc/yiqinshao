@@ -261,10 +261,6 @@
   }
 
   function derivePreviewImage(file, groupKey) {
-    if (groupKey !== "3" && groupKey !== "4") {
-      return file;
-    }
-
     return "个人网站要用到的所有资料。/参考作品/.orbit-previews-websafe/" + groupKey + "/" + deriveWebSafeName(file);
   }
 
