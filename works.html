@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Works — Yiqin Shao</title>
+    <meta
+      name="description"
+      content="Grouped works view for Yiqin Shao."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Long+Cang&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css?v=v154">
+  </head>
+  <body data-page="works-gallery">
+    <div class="works-shell">
+      <header class="works-topbar">
+        <a class="works-topbar__brand" href="index.html" aria-label="Back to Yiqin Shao home">
+          <span class="works-topbar__mark"><img id="works-logo" src="" alt=""></span>
+          <span class="works-topbar__name" id="works-name">YIQIN SHAO</span>
+        </a>
+        <nav class="works-topbar__nav" aria-label="Primary navigation">
+          <a class="works-topbar__link is-active" href="works.html" aria-current="page">Works</a>
+          <a class="works-topbar__link" href="exhibition.html">Exhibition</a>
+          <a class="works-topbar__link" href="contact.html">Contact</a>
+          <a class="works-topbar__link" href="cv.html">CV</a>
+        </nav>
+      </header>
+
+      <main class="works-groups" id="works-groups" aria-label="Grouped works gallery"></main>
+
+      <div class="works-detail" id="works-detail" aria-hidden="true">
+        <button class="works-detail__backdrop" type="button" id="works-detail-backdrop" aria-label="Close work detail"></button>
+        <div class="works-detail__shell" role="dialog" aria-modal="true" aria-label="Artwork detail">
+          <figure class="works-detail__figure">
+            <div class="works-detail__frame">
+              <img id="works-detail-image" src="" alt="">
+            </div>
+            <figcaption class="works-detail__caption">
+              <p class="works-detail__kicker" id="works-detail-kicker">Current Work</p>
+              <div>
+                <h2 class="works-detail__title" id="works-detail-title"></h2>
+                <p class="works-detail__title-zh" id="works-detail-title-zh"></p>
+              </div>
+              <p class="works-detail__line" id="works-detail-line"></p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <script src="content.js?v=v128"></script>
+    <script>
+      (function () {
+        const fallbackGroups = [
+          {
+            key: "1",
+            label: "01",
+            title: "01",
+            works: [
+              { id: "group-1-01", title: "体表温度", titleZh: "体表温度", medium: "布面油画", mediumZh: "布面油画", size: "120 x 120cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/体表温度 布面油画 120x120cm 2025.jpg", alt: "体表温度, 布面油画, 120 x 120cm, 2025" },
+              { id: "group-1-02", title: "囚果", titleZh: "囚果", medium: "布面油画", mediumZh: "布面油画", size: "80 x 60cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/囚果 布面油画 80x60cm 2025.jpg", alt: "囚果, 布面油画, 80 x 60cm, 2025" },
+              { id: "group-1-03", title: "开幕", titleZh: "开幕", medium: "布面油画", mediumZh: "布面油画", size: "120 x 180cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/开幕 布面油画 120x180cm 2025.jpg", alt: "开幕, 布面油画, 120 x 180cm, 2025" },
+              { id: "group-1-04", title: "暗涌", titleZh: "暗涌", medium: "布面油画", mediumZh: "布面油画", size: "75 x 50cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/暗涌 布面油画 75x50cm 2025.jpg", alt: "暗涌, 布面油画, 75 x 50cm, 2025" },
+              { id: "group-1-05", title: "浮生", titleZh: "浮生", medium: "木板油画棒、油画", mediumZh: "木板油画棒、油画", size: "60 x 40cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/浮生 木板油画棒、油画 60x40cm 2025.jpg", alt: "浮生, 木板油画棒、油画, 60 x 40cm, 2025" },
+              { id: "group-1-06", title: "珠玉", titleZh: "珠玉", medium: "布面油画", mediumZh: "布面油画", size: "60 x 60cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/珠玉 布面油画 60x60cm 2025.jpg", alt: "珠玉, 布面油画, 60 x 60cm, 2025" },
+              { id: "group-1-07", title: "窥", titleZh: "窥", medium: "布面油画", mediumZh: "布面油画", size: "60 x 40cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/窥 布面油画 60x40cm 2025 .jpg", alt: "窥, 布面油画, 60 x 40cm, 2025" },
+              { id: "group-1-08", title: "第三视角", titleZh: "第三视角", medium: "布面油画", mediumZh: "布面油画", size: "45 x 30cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/第三视角 布面油画 45x30cm 2025.jpg", alt: "第三视角, 布面油画, 45 x 30cm, 2025" },
+              { id: "group-1-09", title: "红幕下", titleZh: "红幕下", medium: "布面油画", mediumZh: "布面油画", size: "25 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/红幕下 布面油画 25x20cm 2025.jpg", alt: "红幕下, 布面油画, 25 x 20cm, 2025" },
+              { id: "group-1-10", title: "花间私语", titleZh: "花间私语", medium: "布面油画", mediumZh: "布面油画", size: "50 x 70cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/花间私语 布面油画 50x70cm 2025.jpg", alt: "花间私语, 布面油画, 50 x 70cm, 2025" },
+              { id: "group-1-11", title: "被固定的余温", titleZh: "被固定的余温", medium: "布面油画", mediumZh: "布面油画", size: "20 x 15cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/被固定的余温 布面油画 20x15cm 2025.jpg", alt: "被固定的余温, 布面油画, 20 x 15cm, 2025" },
+              { id: "group-1-12", title: "镜核", titleZh: "镜核", medium: "布面油画", mediumZh: "布面油画", size: "50 x 30cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/1/镜核 布面油画 50x30cm 2025.jpg", alt: "镜核, 布面油画, 50 x 30cm, 2025" }
+            ]
+          },
+          {
+            key: "2",
+            label: "02",
+            title: "02",
+            works: [
+              { id: "group-2-01", title: "两只气球", titleZh: "两只气球", medium: "布面油画", mediumZh: "布面油画", size: "69 x 69cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/两只气球 布面油画 69x69cm 2025.jpg", alt: "两只气球, 布面油画, 69 x 69cm, 2025" },
+              { id: "group-2-02", title: "初熟", titleZh: "初熟", medium: "布面油画", mediumZh: "布面油画", size: "32 x 32cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/初熟 布面油画 32x32cm 2025.jpg", alt: "初熟, 布面油画, 32 x 32cm, 2025" },
+              { id: "group-2-03", title: "圆圆", titleZh: "圆圆", medium: "布面油画", mediumZh: "布面油画", size: "20 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/圆圆 布面油画 20x20cm 2025.jpg", alt: "圆圆, 布面油画, 20 x 20cm, 2025" },
+              { id: "group-2-04", title: "旋木", titleZh: "旋木", medium: "布面油画", mediumZh: "布面油画", size: "22 x 15cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/旋木 布面油画 22x15cm 2025.jpg", alt: "旋木, 布面油画, 22 x 15cm, 2025" },
+              { id: "group-2-05", title: "欲言又止", titleZh: "欲言又止", medium: "布面油画", mediumZh: "布面油画", size: "60 x 60cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/欲言又止 布面油画 60x60cm 2025.jpg", alt: "欲言又止, 布面油画, 60 x 60cm, 2025" },
+              { id: "group-2-06", title: "温柔束缚", titleZh: "温柔束缚", medium: "布面油画", mediumZh: "布面油画", size: "20 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/温柔束缚 布面油画 20x20cm 2025.jpg", alt: "温柔束缚, 布面油画, 20 x 20cm, 2025" },
+              { id: "group-2-07", title: "温柔禁忌", titleZh: "温柔禁忌", medium: "布面油画", mediumZh: "布面油画", size: "32 x 32cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/温柔禁忌 布面油画 32x32cm 2025.jpg", alt: "温柔禁忌, 布面油画, 32 x 32cm, 2025" },
+              { id: "group-2-08", title: "湿语", titleZh: "湿语", medium: "布面油画", mediumZh: "布面油画", size: "20 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/湿语 布面油画 20x20cm 2025 .jpg", alt: "湿语, 布面油画, 20 x 20cm, 2025" },
+              { id: "group-2-09", title: "爱与痛的边缘", titleZh: "爱与痛的边缘", medium: "布面油画", mediumZh: "布面油画", size: "20 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/爱与痛的边缘 布面油画 20x20cm 2025.jpg", alt: "爱与痛的边缘, 布面油画, 20 x 20cm, 2025" },
+              { id: "group-2-10", title: "绝对占有", titleZh: "绝对占有", medium: "布面油画", mediumZh: "布面油画", size: "18 x 25cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/绝对占有 布面油画 18x25cm 2025.jpg", alt: "绝对占有, 布面油画, 18 x 25cm, 2025" },
+              { id: "group-2-11", title: "门铃", titleZh: "门铃", medium: "布面油画", mediumZh: "布面油画", size: "20 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/2/门铃 布面油画 20x20cm 2025.jpg", alt: "门铃, 布面油画, 20 x 20cm, 2025" }
+            ]
+          },
+          {
+            key: "3",
+            label: "03",
+            title: "03",
+            works: [
+              { id: "group-3-01", title: "不能说的秘密", titleZh: "不能说的秘密", medium: "木板油画", mediumZh: "木板油画", size: "30 x 22cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/3/不能说的秘密 木板油画 30x22cm 2025 .jpg", alt: "不能说的秘密, 木板油画, 30 x 22cm, 2025" },
+              { id: "group-3-02", title: "入口开启", titleZh: "入口开启", medium: "木板油画", mediumZh: "木板油画", size: "31 x 15cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/入口开启 木板油画 31x15cm 2025.jpg", alt: "入口开启, 木板油画, 31 x 15cm, 2025" },
+              { id: "group-3-03", title: "圈圈圆圆圈圈", titleZh: "圈圈圆圆圈圈", medium: "木板油画", mediumZh: "木板油画", size: "20 x 18cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/圈圈圆圆圈圈木板油画 20x18cm 2025 拷贝.jpg", alt: "圈圈圆圆圈圈, 木板油画, 20 x 18cm, 2025" },
+              { id: "group-3-04", title: "带刺的甜", titleZh: "带刺的甜", medium: "木板油画", mediumZh: "木板油画", size: "20 x 20cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/带刺的甜 木板油画 20x20cm 2025.jpg", alt: "带刺的甜, 木板油画, 20 x 20cm, 2026" },
+              { id: "group-3-05", title: "幸福开始有预兆", titleZh: "幸福开始有预兆", medium: "木板油画", mediumZh: "木板油画", size: "18 x 18cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/幸福开始有预兆 木板油画 18x18cm 2025.jpg", alt: "幸福开始有预兆, 木板油画, 18 x 18cm, 2025" },
+              { id: "group-3-06", title: "有关甜的诱导", titleZh: "有关甜的诱导", medium: "木板油画", mediumZh: "木板油画", size: "25 x 20cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/有关甜的诱导 木板油画 25x20cm 2025.jpg", alt: "有关甜的诱导, 木板油画, 25 x 20cm, 2025" },
+              { id: "group-3-07", title: "被点亮的心", titleZh: "被点亮的心", medium: "木板油画", mediumZh: "木板油画", size: "25 x 18cm", year: "2025", image: "个人网站要用到的所有资料。/参考作品/.web-ready/3/被点亮的心 木板油画 25x18cm 2025.jpg", alt: "被点亮的心, 木板油画, 25 x 18cm, 2025" }
+            ]
+          },
+          {
+            key: "4",
+            label: "04",
+            title: "04",
+            works: [
+              { id: "group-4-01", title: "Ringo", titleZh: "Ringo", medium: "木板油画", mediumZh: "木板油画", size: "28 x 20cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/Ringo 木板油画 28x20cm 2026.jpg", alt: "Ringo, 木板油画, 28 x 20cm, 2026" },
+              { id: "group-4-02", title: "夹", titleZh: "夹", medium: "木板油画", mediumZh: "木板油画", size: "22 x 10cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/夹 木板油画 22x10cm 2026.jpg", alt: "夹, 木板油画, 22 x 10cm, 2026" },
+              { id: "group-4-03", title: "枕边人", titleZh: "枕边人", medium: "木板油画", mediumZh: "木板油画", size: "20 x 20cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/枕边人木板油画 20x20cm 2026.jpg", alt: "枕边人, 木板油画, 20 x 20cm, 2026" },
+              { id: "group-4-04", title: "熟透", titleZh: "熟透", medium: "木板油画", mediumZh: "木板油画", size: "25 x 25cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/熟透 木板油画 25x25cm 2026.jpg", alt: "熟透, 木板油画, 25 x 25cm, 2026" },
+              { id: "group-4-05", title: "裙摆之上", titleZh: "裙摆之上", medium: "木板油画", mediumZh: "木板油画", size: "26 x 28cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/裙摆之上 木板油画 26x28cm 2026.jpg", alt: "裙摆之上, 木板油画, 26 x 28cm, 2026" },
+              { id: "group-4-06", title: "裹语", titleZh: "裹语", medium: "木板油画", mediumZh: "木板油画", size: "25 x 35cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/裹语 木板油画 25x35cm 2026.jpg", alt: "裹语, 木板油画, 25 x 35cm, 2026" },
+              { id: "group-4-07", title: "足下", titleZh: "足下", medium: "木板油画", mediumZh: "木板油画", size: "30 x 30cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/足下 木板油画 30x30cm 2026.jpg", alt: "足下, 木板油画, 30 x 30cm, 2026" },
+              { id: "group-4-08", title: "限时奖励", titleZh: "限时奖励", medium: "木板油画", mediumZh: "木板油画", size: "25 x 20cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/限时奖励 木板油画 25x20cm 2026.jpg", alt: "限时奖励, 木板油画, 25 x 20cm, 2026" },
+              { id: "group-4-09", title: "小半", titleZh: "小半", medium: "木板油画", mediumZh: "木板油画", size: "26 x 26cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/小半 木板油画 26x26cm 2026.jpg", alt: "小半, 木板油画, 26 x 26cm, 2026" },
+              { id: "group-4-10", title: "飘", titleZh: "飘", medium: "木板油画", mediumZh: "木板油画", size: "30 x 22cm", year: "2026", image: "个人网站要用到的所有资料。/参考作品/.web-ready/4/飘 木板油画 30x22cm 2026.jpg", alt: "飘, 木板油画, 30 x 22cm, 2026" }
+            ]
+          }
+        ];
+
+        const site = window.SITE_CONTENT || {};
+        const labels = site.labels || {};
+        const assets = site.assets || {};
+        const shortTitle = site.shortTitle || "YIQIN SHAO";
+        const groups = Array.isArray(site.workGroups) && site.workGroups.length ? site.workGroups : fallbackGroups;
+        if (!groups.length) {
+          return;
+        }
+
+        const touchMode = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const enableDeferredGroups = !touchMode && typeof IntersectionObserver === "function";
+        const cropPositions = [
+          "50% 44%",
+          "50% 58%",
+          "52% 48%",
+          "50% 60%",
+          "48% 42%",
+          "50% 62%",
+          "54% 45%",
+          "50% 48%",
+        ];
+
+        const groupsRoot = document.getElementById("works-groups");
+        const logo = document.getElementById("works-logo");
+        const name = document.getElementById("works-name");
+        const detail = document.getElementById("works-detail");
+        const detailBackdrop = document.getElementById("works-detail-backdrop");
+        const detailShell = detail ? detail.querySelector(".works-detail__shell") : null;
+        const detailImage = document.getElementById("works-detail-image");
+        const detailTitle = document.getElementById("works-detail-title");
+        const detailTitleZh = document.getElementById("works-detail-title-zh");
+        const detailLine = document.getElementById("works-detail-line");
+        const detailKicker = document.getElementById("works-detail-kicker");
+
+        const detailState = {
+          groupIndex: null,
+          workIndex: null,
+        };
+
+        if (logo) {
+          logo.src = assets.logo || "个人网站要用到的所有资料。/艺术家签名的logo。.jpg";
+          logo.alt = "Yiqin Shao logo";
+        }
+
+        if (name) {
+          name.textContent = shortTitle;
+        }
+
+        if (detailKicker) {
+          detailKicker.textContent = labels.currentWork || "Current Work";
+        }
+
+        groupsRoot.innerHTML = groups
+          .map(function (group, groupIndex) {
+            return (
+              '<section class="orbit-group" data-group-index="' +
+              String(groupIndex) +
+              '">' +
+              '<header class="orbit-group__head">' +
+              '<div class="orbit-group__titleblock">' +
+              '<p class="orbit-group__index">Section ' +
+              escapeHtml(group.label) +
+              "</p>" +
+              '<h1 class="orbit-group__title">' +
+              escapeHtml(group.title) +
+              "</h1>" +
+              "</div>" +
+              '<p class="orbit-group__count">' +
+              String(group.works.length).padStart(2, "0") +
+              " works</p>" +
+              "</header>" +
+              '<div class="orbit-group__viewport" data-group-index="' +
+              String(groupIndex) +
+              '" aria-label="Works section ' +
+              escapeHtml(group.label) +
+              '">' +
+              '<div class="orbit-group__glow"></div>' +
+              '<div class="orbit-group__track"></div>' +
+              "</div>" +
+              '<div class="orbit-group__meta">' +
+              '<p class="orbit-group__label">' +
+              escapeHtml(labels.currentWork || "Current Work") +
+              "</p>" +
+              '<h2 class="orbit-group__work-title"></h2>' +
+              '<p class="orbit-group__work-title-zh"></p>' +
+              '<p class="orbit-group__line"></p>' +
+              '<p class="orbit-group__hint">' +
+              escapeHtml(
+                touchMode
+                  ? "Swipe sideways. Tap a near work to open the full image."
+                  : "Drag sideways. Click a near work to open the full image."
+              ) +
+              "</p>" +
+              '<p class="orbit-group__progress"></p>' +
+              "</div>" +
+              "</section>"
+            );
+          })
+          .join("");
+
+        const groupStates = Array.from(groupsRoot.querySelectorAll(".orbit-group")).map(function (section, groupIndex) {
+          return createGroupState(section, groups[groupIndex], groupIndex);
+        });
+
+        const visibilityObserver = enableDeferredGroups
+          ? new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  const section = entry.target;
+                  const state = groupStates.find(function (item) {
+                    return item.section === section;
+                  });
+
+                  if (!state) {
+                    return;
+                  }
+
+                  state.isVisible = entry.isIntersecting;
+
+                  if (entry.isIntersecting) {
+                    ensureGroupCards(state);
+                    if (!state.lastFrame) {
+                      state.lastFrame = performance.now();
+                    }
+                    renderGroup(state);
+                  }
+                });
+              },
+              { root: null, rootMargin: "320px 0px 320px 0px", threshold: 0.01 }
+            )
+          : null;
+
+        groupStates.forEach(function (state, index) {
+          if (!enableDeferredGroups || index < 2) {
+            ensureGroupCards(state);
+            state.isVisible = true;
+          }
+
+          if (visibilityObserver) {
+            visibilityObserver.observe(state.section);
+          } else {
+            ensureGroupCards(state);
+            state.isVisible = true;
+          }
+        });
+
+        if (detailBackdrop) {
+          detailBackdrop.addEventListener("click", closeDetail);
+        }
+
+        if (detailShell) {
+          detailShell.addEventListener("click", closeDetail);
+        }
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") {
+            closeDetail();
+            return;
+          }
+
+          if (detailState.groupIndex === null || detailState.workIndex === null) {
+            return;
+          }
+
+          const group = groups[detailState.groupIndex];
+          if (!group) {
+            return;
+          }
+
+          if (event.key === "ArrowRight") {
+            openDetail(detailState.groupIndex, getWrappedIndex(detailState.workIndex + 1, group.works.length));
+          }
+
+          if (event.key === "ArrowLeft") {
+            openDetail(detailState.groupIndex, getWrappedIndex(detailState.workIndex - 1, group.works.length));
+          }
+        });
+
+        requestAnimationFrame(tick);
+
+        function createGroupState(section, group, groupIndex) {
+          const viewport = section.querySelector(".orbit-group__viewport");
+          const track = section.querySelector(".orbit-group__track");
+          const title = section.querySelector(".orbit-group__work-title");
+          const titleZh = section.querySelector(".orbit-group__work-title-zh");
+          const line = section.querySelector(".orbit-group__line");
+          const progress = section.querySelector(".orbit-group__progress");
+
+          const state = {
+            section,
+            group,
+            groupIndex,
+            viewport,
+            track,
+            title,
+            titleZh,
+            line,
+            progress,
+            cards: [],
+            current: 0,
+            target: 0,
+            activeIndex: 0,
+            pointerDown: false,
+            dragMoved: false,
+            startX: 0,
+            startTarget: 0,
+            lastPointerX: 0,
+            lastPointerTime: 0,
+            dragVelocity: 0,
+            inertiaVelocity: 0,
+            autoResumeAt: 1800 + groupIndex * 300,
+            autoDirection: groupIndex % 2 === 0 ? 1 : -1,
+            suppressClickUntil: 0,
+            lastFrame: 0,
+            isRendered: false,
+            isVisible: !enableDeferredGroups || groupIndex < 2,
+          };
+
+          updateGroupMeta(state, 0);
+
+          viewport.addEventListener(
+            "wheel",
+            function (event) {
+              if (detailState.groupIndex !== null) {
+                return;
+              }
+
+              const horizontalIntent = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+              if (!horizontalIntent) {
+                return;
+              }
+
+              event.preventDefault();
+              pauseAuto(state);
+              const delta = event.deltaX;
+              state.target += delta / 680;
+              state.inertiaVelocity += clamp(delta / 7200, -0.14, 0.14);
+            },
+            { passive: false }
+          );
+
+          viewport.addEventListener("pointerdown", function (event) {
+            if (detailState.groupIndex !== null) {
+              return;
+            }
+
+            state.pointerDown = true;
+            state.dragMoved = false;
+            state.startX = event.clientX;
+            state.startTarget = state.target;
+            state.lastPointerX = event.clientX;
+            state.lastPointerTime = event.timeStamp || performance.now();
+            state.dragVelocity = 0;
+            state.inertiaVelocity = 0;
+            pauseAuto(state);
+            viewport.setPointerCapture(event.pointerId);
+          });
+
+          viewport.addEventListener("pointermove", function (event) {
+            if (!state.pointerDown) {
+              return;
+            }
+
+            const deltaX = event.clientX - state.startX;
+            if (Math.abs(deltaX) > 4) {
+              state.dragMoved = true;
+            }
+
+            state.target = state.startTarget - deltaX / 175;
+
+            const now = event.timeStamp || performance.now();
+            const stepX = event.clientX - state.lastPointerX;
+            const stepTime = Math.max(16, now - state.lastPointerTime);
+            const deltaTarget = -stepX / 175;
+            state.dragVelocity = clamp((deltaTarget * 16) / stepTime, -0.28, 0.28);
+            state.lastPointerX = event.clientX;
+            state.lastPointerTime = now;
+          });
+
+          function releasePointer() {
+            if (!state.pointerDown) {
+              return;
+            }
+
+            state.pointerDown = false;
+            if (state.dragMoved) {
+              state.suppressClickUntil = performance.now() + 280;
+              state.inertiaVelocity = state.dragVelocity * (touchMode ? 2.4 : 2.1);
+            } else {
+              state.target = Math.round(state.target);
+            }
+          }
+
+          viewport.addEventListener("pointerup", releasePointer);
+          viewport.addEventListener("pointercancel", releasePointer);
+          viewport.addEventListener("pointerleave", releasePointer);
+
+          return state;
+        }
+
+        function ensureGroupCards(state) {
+          if (state.isRendered) {
+            return;
+          }
+
+          state.track.innerHTML = state.group.works
+            .map(function (work, index) {
+              return (
+                '<button class="orbit-card" type="button" data-work-index="' +
+                String(index) +
+                '" data-work-id="' +
+                escapeHtml(work.id) +
+                '" aria-label="' +
+                escapeHtml(work.titleZh || work.title) +
+                '">' +
+                '<span class="orbit-card__frame">' +
+                '<img src="' +
+                escapeHtml(work.previewImage || work.image) +
+                '" alt="' +
+                escapeHtml(work.alt) +
+                '" style="object-position:' +
+                cropPositions[(state.groupIndex * 3 + index) % cropPositions.length] +
+                ';" loading="' +
+                (state.groupIndex === 0 && index < 3 ? "eager" : "lazy") +
+                '" fetchpriority="' +
+                (state.groupIndex === 0 && index < 2 ? "high" : "low") +
+                '" decoding="async">' +
+                "</span>" +
+                "</button>"
+              );
+            })
+            .join("");
+
+          state.cards = Array.from(state.track.querySelectorAll(".orbit-card"));
+          state.cards.forEach(function (card) {
+            card.addEventListener("click", function () {
+              if (performance.now() < state.suppressClickUntil) {
+                return;
+              }
+
+              const index = Number(card.getAttribute("data-work-index") || "0");
+              const distanceToFront = Math.abs(wrapDelta(index - state.current, state.group.works.length));
+              if (distanceToFront < 1.9) {
+                state.target = getNearestTarget(state, index);
+                openDetail(state.groupIndex, index);
+                return;
+              }
+
+              pauseAuto(state);
+              state.target = snapTargetToIndex(state, index);
+            });
+          });
+          state.isRendered = true;
+        }
+
+        function tick(timestamp) {
+          groupStates.forEach(function (state) {
+            tickGroup(state, timestamp);
+          });
+
+          requestAnimationFrame(tick);
+        }
+
+        function tickGroup(state, timestamp) {
+          if (!state.isRendered || (!state.isVisible && !state.pointerDown && detailState.groupIndex !== state.groupIndex)) {
+            state.lastFrame = timestamp;
+            return;
+          }
+
+          if (!state.lastFrame) {
+            state.lastFrame = timestamp;
+          }
+
+          const deltaTime = timestamp - state.lastFrame;
+          state.lastFrame = timestamp;
+          const detailOpen = detailState.groupIndex !== null;
+
+          if (!state.pointerDown && !detailOpen && !reducedMotion && timestamp > state.autoResumeAt) {
+            state.target += deltaTime * 0.000009 * state.autoDirection;
+          }
+
+          if (!state.pointerDown && !detailOpen && Math.abs(state.inertiaVelocity) > 0.0008) {
+            const frameFactor = deltaTime / 16;
+            state.target += state.inertiaVelocity * frameFactor;
+            state.inertiaVelocity *= Math.pow(0.972, frameFactor);
+          } else if (!state.pointerDown && Math.abs(state.inertiaVelocity) <= 0.0008) {
+            state.inertiaVelocity = 0;
+          }
+
+          if (!state.pointerDown && !detailOpen) {
+            const nearest = Math.round(state.target);
+            const snapDelta = nearest - state.target;
+            const snapStrength =
+              Math.abs(snapDelta) < 0.96 ? 0.11 : Math.abs(snapDelta) < 1.8 ? 0.052 : 0.018;
+            state.target += snapDelta * snapStrength;
+          }
+
+          const lerp = state.pointerDown ? 0.16 : 0.08;
+          state.current += (state.target - state.current) * lerp;
+          renderGroup(state);
+        }
+
+        function renderGroup(state) {
+          const viewportRect = state.viewport.getBoundingClientRect();
+          const radiusX = Math.min(viewportRect.width * 0.38, 360);
+          const nextActive = getWrappedIndex(Math.round(state.current), state.group.works.length);
+
+          if (nextActive !== state.activeIndex) {
+            state.activeIndex = nextActive;
+            updateGroupMeta(state, state.activeIndex);
+          } else {
+            updateGroupProgress(state, state.activeIndex);
+          }
+
+          state.cards.forEach(function (card, index) {
+            const delta = wrapDelta(index - state.current, state.group.works.length);
+            const absDelta = Math.abs(delta);
+            const clamped = clamp(delta, -2.8, 2.8);
+            const x = Math.sin(clamped * 0.74) * radiusX;
+            const y = Math.pow(absDelta, 1.22) * 18;
+            const z = -Math.pow(absDelta, 1.2) * 175;
+            const scale = Math.max(0.58, 1 - Math.pow(absDelta, 1.02) * 0.16);
+            const rotateY = -delta * 22;
+            const opacity = absDelta > 4.4 ? 0 : Math.max(0.82, 1 - absDelta * 0.034);
+            const brightness = Math.max(0.74, 1 - absDelta * 0.08);
+            const saturate = Math.max(0.82, 1 - absDelta * 0.04);
+            const blur = Math.max(0, absDelta - 1.2) * 0.6;
+
+            card.style.transform =
+              "translate(-50%, -50%) translate3d(" +
+              x.toFixed(2) +
+              "px, " +
+              y.toFixed(2) +
+              "px, " +
+              z.toFixed(2) +
+              "px) rotateY(" +
+              rotateY.toFixed(2) +
+              "deg) scale(" +
+              scale.toFixed(3) +
+              ")";
+            card.style.opacity = opacity.toFixed(3);
+            card.style.zIndex = String(1000 - Math.round(absDelta * 100));
+            card.style.setProperty(
+              "--orbit-filter",
+              "blur(" +
+                blur.toFixed(2) +
+                "px) brightness(" +
+                brightness.toFixed(3) +
+                ") saturate(" +
+                saturate.toFixed(3) +
+                ")"
+            );
+            card.classList.toggle("is-active", index === state.activeIndex);
+            card.classList.toggle("is-near", absDelta < 1.36);
+            card.classList.toggle("is-openable", absDelta < 1.9);
+          });
+        }
+
+        function updateGroupMeta(state, index) {
+          const work = state.group.works[index];
+          if (!work) {
+            return;
+          }
+
+          if (state.title) {
+            state.title.textContent = work.titleZh || work.title;
+            state.title.classList.toggle("zh-font", hasHan(state.title.textContent));
+          }
+
+          if (state.titleZh) {
+            const secondary = work.title && work.title !== work.titleZh ? work.title : "";
+            state.titleZh.textContent = secondary;
+            state.titleZh.hidden = !secondary;
+            state.titleZh.classList.toggle("zh-font", hasHan(secondary));
+          }
+
+          if (state.line) {
+            state.line.textContent = [work.mediumZh || work.medium, work.size, work.year].filter(Boolean).join(" / ");
+            state.line.classList.toggle("zh-font", hasHan(state.line.textContent));
+          }
+
+          updateGroupProgress(state, index);
+        }
+
+        function updateGroupProgress(state, index) {
+          if (!state.progress) {
+            return;
+          }
+
+          state.progress.textContent =
+            String(index + 1).padStart(2, "0") +
+            " / " +
+            String(state.group.works.length).padStart(2, "0");
+        }
+
+        function openDetail(groupIndex, workIndex) {
+          const group = groups[groupIndex];
+          if (!group) {
+            return;
+          }
+
+          const work = group.works[getWrappedIndex(workIndex, group.works.length)];
+          if (!work || !detail || !detailImage || !detailTitle || !detailTitleZh || !detailLine) {
+            return;
+          }
+
+          detailState.groupIndex = groupIndex;
+          detailState.workIndex = getWrappedIndex(workIndex, group.works.length);
+          detailImage.src = work.image;
+          detailImage.alt = work.alt;
+          detailTitle.textContent = work.titleZh || work.title;
+          detailTitle.classList.toggle("zh-font", hasHan(detailTitle.textContent));
+          detailTitleZh.textContent = work.title && work.title !== work.titleZh ? work.title : "";
+          detailTitleZh.hidden = !detailTitleZh.textContent;
+          detailTitleZh.classList.toggle("zh-font", hasHan(detailTitleZh.textContent));
+          detailLine.textContent = [work.mediumZh || work.medium, work.size, work.year].filter(Boolean).join(" / ");
+          detailLine.classList.toggle("zh-font", hasHan(detailLine.textContent));
+          detail.classList.add("is-open");
+          detail.setAttribute("aria-hidden", "false");
+          document.body.classList.add("has-detail-open");
+        }
+
+        function closeDetail() {
+          if (!detail || detailState.groupIndex === null) {
+            return;
+          }
+
+          detailState.groupIndex = null;
+          detailState.workIndex = null;
+          detail.classList.remove("is-open");
+          detail.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("has-detail-open");
+        }
+
+        function pauseAuto(state) {
+          state.autoResumeAt = performance.now() + 5200;
+        }
+
+        function getWrappedIndex(index, length) {
+          return ((index % length) + length) % length;
+        }
+
+        function getNearestTarget(state, index) {
+          const candidates = [];
+          for (let offset = -2; offset <= 2; offset += 1) {
+            candidates.push(index + offset * state.group.works.length);
+          }
+
+          return candidates.reduce(function (best, candidate) {
+            return Math.abs(candidate - state.current) < Math.abs(best - state.current) ? candidate : best;
+          }, candidates[0]);
+        }
+
+        function snapTargetToIndex(state, index) {
+          const nearest = getNearestTarget(state, index);
+          return state.target + (nearest - state.target) * 0.82;
+        }
+
+        function wrapDelta(delta, length) {
+          const half = length / 2;
+          return ((((delta + half) % length) + length) % length) - half;
+        }
+
+        function clamp(value, min, max) {
+          return Math.max(min, Math.min(max, value));
+        }
+
+        function hasHan(value) {
+          return /[\u3400-\u9fff\uf900-\ufaff]/.test(String(value || ""));
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+      })();
+    </script>
+    <script src="nav-transition.js?v=v154"></script>
+  </body>
+</html>

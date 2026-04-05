@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>CV — Yiqin Shao</title>
+    <meta
+      name="description"
+      content="CV for Yiqin Shao."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Long+Cang&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css?v=v154">
+  </head>
+  <body data-page="subpage">
+    <div class="subpage-shell">
+      <header class="works-topbar">
+        <a class="works-topbar__brand" href="index.html" aria-label="Back to Yiqin Shao home">
+          <span class="works-topbar__mark"><img id="page-logo" src="" alt=""></span>
+          <span class="works-topbar__name" id="page-name">YIQIN SHAO</span>
+        </a>
+        <nav class="works-topbar__nav" aria-label="Primary navigation">
+          <a class="works-topbar__link" href="works.html">Works</a>
+          <a class="works-topbar__link" href="exhibition.html">Exhibition</a>
+          <a class="works-topbar__link" href="contact.html">Contact</a>
+          <a class="works-topbar__link is-active" href="cv.html" aria-current="page">CV</a>
+        </nav>
+      </header>
+
+      <main class="subpage-main">
+        <section class="subpage-hero subpage-section--narrow">
+          <p class="subpage-kicker">CV</p>
+          <h1 class="subpage-title" id="cv-title">CV</h1>
+          <p class="subpage-intro" id="cv-intro"></p>
+        </section>
+
+        <section class="subpage-section cv-dossier" id="cv-dossier"></section>
+      </main>
+    </div>
+
+    <script src="content.js?v=v123"></script>
+    <script>
+      (function () {
+        const site = window.SITE_CONTENT;
+        if (!site) {
+          return;
+        }
+
+        const logo = document.getElementById("page-logo");
+        const name = document.getElementById("page-name");
+        const title = document.getElementById("cv-title");
+        const intro = document.getElementById("cv-intro");
+        const dossier = document.getElementById("cv-dossier");
+
+        if (logo) {
+          logo.src = site.assets.logo;
+          logo.alt = "Yiqin Shao logo";
+        }
+
+        if (name) {
+          name.textContent = site.shortTitle;
+        }
+
+        if (title) {
+          title.textContent = site.panels.cv.title;
+        }
+
+        if (intro) {
+          intro.textContent = site.panels.cv.intro;
+        }
+
+        if (dossier) {
+          const entries = site.cv.entries
+            .map(function (item) {
+              const zhLocation = item.venueZh
+                ? item.venueZh + (item.cityZh && item.venueZh.indexOf(item.cityZh) === -1 ? "，" + item.cityZh : "")
+                : item.cityZh || "";
+
+              return (
+                '<li class="cv-dossier__entry">' +
+                '<span class="cv-dossier__entry-year">' + escapeHtml(item.year) + "</span>" +
+                '<div class="cv-dossier__entry-body">' +
+                '<p class="cv-dossier__entry-title">' + escapeHtml(item.title) + "</p>" +
+                '<p class="cv-dossier__entry-title-zh zh-font">' + escapeHtml(item.titleZh || "") + "</p>" +
+                '<p class="cv-dossier__entry-meta">' + escapeHtml(item.type) + " / " + escapeHtml(item.venue) + ", " + escapeHtml(item.city) + "</p>" +
+                '<p class="cv-dossier__entry-meta-zh zh-font">' + escapeHtml((item.typeZh || "") + " / " + zhLocation) + "</p>" +
+                "</div>" +
+                "</li>"
+              );
+            })
+            .join("");
+
+          dossier.innerHTML = '<ul class="cv-dossier__list">' + entries + "</ul>";
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+      })();
+    </script>
+    <script src="nav-transition.js?v=v154"></script>
+  </body>
+</html>

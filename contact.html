@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Contact — Yiqin Shao</title>
+    <meta
+      name="description"
+      content="Contact and artist statement for Yiqin Shao."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Long+Cang&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css?v=v154">
+  </head>
+  <body data-page="subpage">
+    <div class="subpage-shell">
+      <header class="works-topbar">
+        <a class="works-topbar__brand" href="index.html" aria-label="Back to Yiqin Shao home">
+          <span class="works-topbar__mark"><img id="page-logo" src="" alt=""></span>
+          <span class="works-topbar__name" id="page-name">YIQIN SHAO</span>
+        </a>
+        <nav class="works-topbar__nav" aria-label="Primary navigation">
+          <a class="works-topbar__link" href="works.html">Works</a>
+          <a class="works-topbar__link" href="exhibition.html">Exhibition</a>
+          <a class="works-topbar__link is-active" href="contact.html" aria-current="page">Contact</a>
+          <a class="works-topbar__link" href="cv.html">CV</a>
+        </nav>
+      </header>
+
+      <main class="subpage-main">
+        <section class="subpage-hero subpage-section--narrow">
+          <p class="subpage-kicker">Contact</p>
+          <h1 class="subpage-title" id="contact-title">Contact</h1>
+          <p class="subpage-intro" id="contact-intro"></p>
+        </section>
+
+        <section class="subpage-section" id="contact-dossier"></section>
+      </main>
+    </div>
+
+    <script src="content.js?v=v123"></script>
+    <script>
+      (function () {
+        const site = window.SITE_CONTENT;
+        if (!site) {
+          return;
+        }
+
+        const logo = document.getElementById("page-logo");
+        const name = document.getElementById("page-name");
+        const title = document.getElementById("contact-title");
+        const intro = document.getElementById("contact-intro");
+        const dossier = document.getElementById("contact-dossier");
+
+        if (logo) {
+          logo.src = site.assets.logo;
+          logo.alt = "Yiqin Shao logo";
+        }
+
+        if (name) {
+          name.textContent = site.shortTitle;
+        }
+
+        if (title) {
+          title.textContent = site.panels.contact.title;
+        }
+
+        if (intro) {
+          intro.textContent = site.panels.contact.intro;
+        }
+
+        if (dossier) {
+          const links = [
+            { item: site.contact.instagram, type: "instagram", label: site.contact.instagram.label },
+            { item: site.contact.xiaohongshu, type: "redbook", label: "RedBook" },
+            { item: site.contact.email, type: "email", label: site.contact.email.label },
+          ]
+            .map(function (entry) {
+              const item = entry.item;
+              const cardLabel = entry.label;
+              const icon = getContactIcon(entry.type);
+              const valueMarkup = item.href
+                ? '<a class="dossier-links__value" href="' +
+                  escapeHtml(item.href) +
+                  '" target="' +
+                  (item.href.startsWith("http") ? "_blank" : "_self") +
+                  '" rel="noreferrer">' +
+                  escapeHtml(item.value) +
+                  "</a>"
+                : '<span class="dossier-links__value">' + escapeHtml(item.value) + "</span>";
+
+              return (
+                '<div class="dossier-links__row dossier-links__row--' + escapeHtml(entry.type) + '">' +
+                '<div class="dossier-links__icon" aria-hidden="true">' + icon + "</div>" +
+                '<div class="dossier-links__body">' +
+                '<p class="dossier-links__label">' + escapeHtml(cardLabel) + "</p>" +
+                '<div class="dossier-links__actions">' +
+                valueMarkup +
+                "</div>" +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("");
+
+          dossier.innerHTML =
+            '<div class="dossier-card">' +
+            '<div class="dossier-card__portrait">' +
+            '<img src="' + escapeHtml(site.assets.portrait) + '" alt="' + escapeHtml(site.artist.name + " portrait") + '">' +
+            "</div>" +
+            '<div class="dossier-card__content">' +
+            '<div class="dossier-card__name-line">' +
+            '<p class="dossier-card__name">' + escapeHtml(site.artist.name) + ' / <span class="zh-font">' + escapeHtml(site.artist.nameZh) + "</span></p>" +
+            '<a class="dossier-card__portfolio dossier-card__portfolio--name" href="' + escapeHtml(site.assets.portfolioPdf) + '" target="_blank" rel="noreferrer">' + escapeHtml(site.labels.portfolio) + "</a>" +
+            "</div>" +
+            '<p class="dossier-card__facts zh-font">' + escapeHtml(site.artist.birth) + "<br>" + escapeHtml(site.artist.study) + "</p>" +
+            '<p class="dossier-card__copy">' + escapeHtml(site.artist.bioEn) + "</p>" +
+            '<p class="dossier-card__copy zh-font">' + escapeHtml(site.artist.bioZh) + "</p>" +
+            '<div class="dossier-links">' + links + "</div>" +
+            "</div>" +
+            "</div>";
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        function getContactIcon(type) {
+          if (type === "instagram") {
+            return '<svg viewBox="0 0 24 24" focusable="false"><defs><linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f9ce34"/><stop offset="45%" stop-color="#ee2a7b"/><stop offset="100%" stop-color="#6228d7"/></linearGradient></defs><rect x="3.5" y="3.5" width="17" height="17" rx="5.2" fill="none" stroke="url(#ig-grad)" stroke-width="2.3"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="url(#ig-grad)" stroke-width="2.3"/><circle cx="17.3" cy="6.9" r="1.2" fill="url(#ig-grad)"/></svg>';
+          }
+
+          if (type === "redbook") {
+            return '<svg viewBox="0 0 24 24" focusable="false"><rect x="3.5" y="5.2" width="17" height="13.6" rx="4.2" fill="none" stroke="#ff335f" stroke-width="2.2"/><text x="12" y="14.4" fill="#ff335f" font-size="6.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700">RED</text></svg>';
+          }
+
+          return '<svg viewBox="0 0 24 24" focusable="false"><path d="M4.5 7.5h15a1 1 0 0 1 1 1v7a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4.5 15.5v-7a1 1 0 0 1 1-1Z" fill="none" stroke="#63a5ff" stroke-width="2"/><path d="m6.2 9 5.3 4.4a.8.8 0 0 0 1 0L17.8 9" fill="none" stroke="#63a5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        }
+      })();
+    </script>
+    <script src="nav-transition.js?v=v154"></script>
+  </body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exhibition — Yiqin Shao</title>
+    <meta
+      name="description"
+      content="Selected exhibitions and appearances by Yiqin Shao."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Long+Cang&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css?v=v156">
+  </head>
+  <body data-page="subpage">
+    <div class="subpage-shell">
+      <header class="works-topbar">
+        <a class="works-topbar__brand" href="index.html" aria-label="Back to Yiqin Shao home">
+          <span class="works-topbar__mark"><img id="page-logo" src="" alt=""></span>
+          <span class="works-topbar__name" id="page-name">YIQIN SHAO</span>
+        </a>
+        <nav class="works-topbar__nav" aria-label="Primary navigation">
+          <a class="works-topbar__link" href="works.html">Works</a>
+          <a class="works-topbar__link is-active" href="exhibition.html" aria-current="page">Exhibition</a>
+          <a class="works-topbar__link" href="contact.html">Contact</a>
+          <a class="works-topbar__link" href="cv.html">CV</a>
+        </nav>
+      </header>
+
+      <main class="subpage-main">
+        <section class="subpage-hero">
+          <p class="subpage-kicker">Exhibition</p>
+          <h1 class="subpage-title" id="exhibition-title">Exhibition</h1>
+        </section>
+
+        <section class="subpage-section">
+          <div class="exhibition-stories" id="exhibition-stories"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="content.js?v=v156"></script>
+    <script>
+      (function () {
+        const site = window.SITE_CONTENT;
+        if (!site) {
+          return;
+        }
+
+        const logo = document.getElementById("page-logo");
+        const name = document.getElementById("page-name");
+        const title = document.getElementById("exhibition-title");
+        const stories = document.getElementById("exhibition-stories");
+
+        if (logo) {
+          logo.src = site.assets.logo;
+          logo.alt = "Yiqin Shao logo";
+        }
+
+        if (name) {
+          name.textContent = site.shortTitle;
+        }
+
+        if (title) {
+          title.textContent = site.exhibition.title;
+          if (hasHan(site.exhibition.title)) {
+            title.classList.add("zh-font");
+          }
+        }
+
+        if (stories) {
+          stories.innerHTML = (site.exhibition.stories || [])
+            .map(function (item, index) {
+              const images = Array.isArray(item.images) ? item.images : [];
+              const titleText = item.titleDisplay || item.titleZh || item.titleEn || "";
+
+              return (
+                '<article class="exhibition-story">' +
+                '<div class="exhibition-story__copyblock">' +
+                '<p class="exhibition-story__eyebrow">' + escapeHtml(item.year || "") + (item.typeEn ? " / " + escapeHtml(item.typeEn) : "") + "</p>" +
+                '<h2 class="exhibition-story__title zh-font">' + escapeHtml(titleText) + "</h2>" +
+                (item.titleEn ? '<p class="exhibition-story__title-en">' + escapeHtml(item.titleEn) + "</p>" : "") +
+                '<p class="exhibition-story__meta">' +
+                [item.venueEn, item.city].filter(Boolean).map(escapeHtml).join(", ") +
+                (item.dates ? " / " + escapeHtml(item.dates) : "") +
+                "</p>" +
+                (item.copyEn ? '<p class="exhibition-story__body">' + escapeHtml(item.copyEn) + "</p>" : "") +
+                (item.contextEn ? '<p class="exhibition-story__context">' + escapeHtml(item.contextEn) + "</p>" : "") +
+                "</div>" +
+                '<div class="exhibition-carousel" data-carousel>' +
+                '<div class="exhibition-carousel__viewport">' +
+                '<div class="exhibition-carousel__track" data-carousel-track>' +
+                images
+                  .map(function (image, thumbIndex) {
+                    return (
+                      '<figure class="exhibition-carousel__slide">' +
+                      '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(titleText + " installation view " + String(thumbIndex + 1)) + '" loading="eager" decoding="async" draggable="false">' +
+                      "</figure>"
+                    );
+                  })
+                  .join("") +
+                "</div>" +
+                "</div>" +
+                '<p class="exhibition-story__count" data-carousel-count>' + String(images.length ? 1 : 0) + " / " + String(images.length) + "</p>" +
+                "</div>" +
+                "</article>"
+              );
+            })
+            .join("");
+
+          initCarousels();
+        }
+
+        function initCarousels() {
+          const carousels = Array.from(document.querySelectorAll("[data-carousel]"));
+          const transitionValue = "transform 720ms cubic-bezier(0.22, 1, 0.36, 1)";
+
+          carousels.forEach(function (carousel) {
+            const track = carousel.querySelector("[data-carousel-track]");
+            const slides = track ? Array.from(track.children) : [];
+            const count = carousel.parentElement ? carousel.parentElement.querySelector("[data-carousel-count]") : null;
+            if (!track || !slides.length) {
+              return;
+            }
+
+            const realCount = slides.length;
+            if (realCount > 1) {
+              const firstClone = slides[0].cloneNode(true);
+              const lastClone = slides[slides.length - 1].cloneNode(true);
+              firstClone.setAttribute("aria-hidden", "true");
+              lastClone.setAttribute("aria-hidden", "true");
+              track.insertBefore(lastClone, track.firstChild);
+              track.appendChild(firstClone);
+            }
+
+            let index = realCount > 1 ? 1 : 0;
+            let startX = 0;
+            let currentX = 0;
+            let pointerDown = false;
+            let autoplayId = null;
+            let isAnimating = false;
+
+            function getLogicalIndex() {
+              if (realCount < 2) {
+                return 0;
+              }
+
+              return ((index - 1) % realCount + realCount) % realCount;
+            }
+
+            function render(animate) {
+              track.style.transition = animate === false ? "none" : transitionValue;
+              track.style.transform = "translateX(" + String(index * -100) + "%)";
+              if (count) {
+                count.textContent = String(getLogicalIndex() + 1) + " / " + String(realCount);
+              }
+            }
+
+            function goTo(nextIndex, animate) {
+              if (realCount > 1) {
+                nextIndex = Math.max(0, Math.min(realCount + 1, nextIndex));
+              }
+
+              if (animate !== false && isAnimating) {
+                return;
+              }
+
+              index = nextIndex;
+              isAnimating = animate !== false && realCount > 1;
+              render(animate);
+            }
+
+            function jumpTo(nextIndex) {
+              index = nextIndex;
+              isAnimating = false;
+              render(false);
+              track.offsetHeight;
+              track.style.transition = transitionValue;
+            }
+
+            function startAutoplay() {
+              stopAutoplay();
+              if (realCount < 2) {
+                return;
+              }
+
+              autoplayId = window.setInterval(function () {
+                if (!pointerDown && !isAnimating) {
+                  goTo(index + 1, true);
+                }
+              }, 3200);
+            }
+
+            function stopAutoplay() {
+              if (autoplayId) {
+                window.clearInterval(autoplayId);
+                autoplayId = null;
+              }
+            }
+
+            carousel.addEventListener("pointerdown", function (event) {
+              pointerDown = true;
+              startX = event.clientX;
+              currentX = event.clientX;
+              carousel.setPointerCapture(event.pointerId);
+              stopAutoplay();
+            });
+
+            carousel.addEventListener("pointermove", function (event) {
+              if (!pointerDown) {
+                return;
+              }
+
+              currentX = event.clientX;
+            });
+
+            function releasePointer() {
+              if (!pointerDown) {
+                return;
+              }
+
+              const delta = currentX - startX;
+              pointerDown = false;
+              if (Math.abs(delta) < 28 || isAnimating) {
+                startAutoplay();
+                return;
+              }
+
+              goTo(index + (delta < 0 ? 1 : -1), true);
+              startAutoplay();
+            }
+
+            track.addEventListener("transitionend", function (event) {
+              if (event.propertyName !== "transform" || realCount < 2) {
+                return;
+              }
+
+              if (index === 0) {
+                jumpTo(realCount);
+              } else if (index === realCount + 1) {
+                jumpTo(1);
+              } else {
+                isAnimating = false;
+              }
+            });
+
+            carousel.addEventListener("pointerup", releasePointer);
+            carousel.addEventListener("pointercancel", releasePointer);
+            carousel.addEventListener("pointerleave", releasePointer);
+            carousel.addEventListener("lostpointercapture", releasePointer);
+            carousel.addEventListener("mouseenter", stopAutoplay);
+            carousel.addEventListener("mouseleave", startAutoplay);
+
+            render(false);
+            startAutoplay();
+          });
+        }
+
+        function hasHan(value) {
+          return /[\u3400-\u9fff\uf900-\ufaff]/.test(String(value || ""));
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+      })();
+    </script>
+    <script src="nav-transition.js?v=v154"></script>
+  </body>
+</html>

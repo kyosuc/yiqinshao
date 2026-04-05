@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yiqin Shao</title>
+    <meta
+      name="description"
+      content="Yiqin Shao is a painter building intimate tension through suspended objects, soft color, and deliberate estrangement."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Long+Cang&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css?v=v154">
+  </head>
+  <body data-page="stage">
+    <div class="stage-app">
+      <div class="mobile-chrome">
+        <a class="mobile-chrome__brand" href="index.html" aria-label="Yiqin Shao stage">
+          <span class="mobile-chrome__mark"><img data-site-logo src="" alt=""></span>
+          <span class="mobile-chrome__name" data-site-name>YIQIN SHAO</span>
+        </a>
+        <nav class="mobile-chrome__nav" aria-label="Primary navigation">
+          <a class="mobile-chrome__link" href="works.html">Works</a>
+          <a class="mobile-chrome__link" href="exhibition.html">Exhibition</a>
+          <a class="mobile-chrome__link" href="contact.html">Contact</a>
+          <a class="mobile-chrome__link" href="cv.html">CV</a>
+        </nav>
+      </div>
+
+      <aside class="rail">
+        <a class="rail__brand" href="index.html" aria-label="Yiqin Shao stage">
+          <span class="rail__mark"><img data-site-logo src="" alt=""></span>
+          <span class="rail__name" data-site-name>YIQIN SHAO</span>
+        </a>
+
+        <nav class="rail__nav" aria-label="Stage navigation">
+          <a class="rail__link" href="works.html">Works</a>
+          <a class="rail__link" href="exhibition.html">Exhibition</a>
+          <a class="rail__link" href="contact.html">Contact</a>
+          <a class="rail__link" href="cv.html">CV</a>
+        </nav>
+
+        <div class="rail__footer">
+          <p class="rail__note" id="rail-note"></p>
+          <a class="rail__portfolio" id="rail-portfolio" href="" target="_blank" rel="noreferrer">Portfolio PDF</a>
+        </div>
+      </aside>
+
+      <main class="stage" id="stage">
+        <div class="stage__vignette"></div>
+        <div class="stage__grain"></div>
+        <div class="stage__tone" id="stage-tone"></div>
+        <p class="stage__ghost" id="stage-ghost">YIQIN SHAO</p>
+
+        <section class="stage__intro">
+          <p class="stage__kicker" id="stage-kicker"></p>
+          <p class="stage__subtitle" id="stage-subtitle"></p>
+        </section>
+
+        <section class="viewer" id="viewer">
+          <button class="viewer__button" type="button" id="viewer-button">
+            <div class="viewer__frame">
+              <img class="viewer__image viewer__image--heart" id="viewer-image-heart" src="" alt="">
+            </div>
+            <div class="viewer__meta">
+              <p class="viewer__label" id="viewer-label">Current Work</p>
+              <h1 class="viewer__title" id="viewer-title"></h1>
+              <p class="viewer__title-zh" id="viewer-title-zh"></p>
+              <p class="viewer__line" id="viewer-line"></p>
+              <p class="viewer__prompt" id="viewer-prompt"></p>
+              <span class="viewer__cta" id="viewer-cta">Enter Detail</span>
+            </div>
+          </button>
+        </section>
+
+        <section class="collage" id="collage" aria-label="Floating artwork collage"></section>
+      </main>
+
+      <div class="heart-fullscreen" id="heart-fullscreen" aria-hidden="true">
+        <button
+          class="heart-fullscreen__backdrop"
+          type="button"
+          id="heart-fullscreen-backdrop"
+          aria-label="Close fullscreen artwork"
+        ></button>
+        <div class="heart-fullscreen__wash"></div>
+        <div class="heart-fullscreen__tone"></div>
+        <figure class="heart-fullscreen__figure" aria-hidden="true">
+          <div class="heart-fullscreen__frame" id="heart-fullscreen-frame">
+            <img class="heart-fullscreen__image" id="heart-fullscreen-image" src="" alt="">
+          </div>
+        </figure>
+      </div>
+
+      <div class="panel-layer" id="panel-layer">
+        <button class="panel-layer__backdrop" type="button" id="panel-backdrop" data-close-panel aria-label="Close panel"></button>
+
+        <aside class="panel-sheet" data-panel="paintings" aria-hidden="true">
+          <div class="panel-sheet__inner">
+            <div class="panel-sheet__top">
+              <p class="panel-sheet__kicker">Paintings</p>
+              <button class="panel-sheet__close" type="button" data-close-panel>Close</button>
+            </div>
+            <h2 class="panel-sheet__title" id="panel-paintings-title">Paintings Index</h2>
+            <p class="panel-sheet__intro" id="panel-paintings-intro"></p>
+            <div class="paintings-index" id="paintings-index"></div>
+          </div>
+        </aside>
+
+        <aside class="panel-sheet" data-panel="exhibition" aria-hidden="true">
+          <div class="panel-sheet__inner">
+            <div class="panel-sheet__top">
+              <p class="panel-sheet__kicker">Exhibition</p>
+              <button class="panel-sheet__close" type="button" data-close-panel>Close</button>
+            </div>
+            <h2 class="panel-sheet__title" id="panel-exhibition-title">Exhibition Record</h2>
+            <p class="panel-sheet__intro" id="panel-exhibition-intro"></p>
+            <div class="record-list" id="exhibition-records"></div>
+            <p class="panel-sheet__note" id="exhibition-note"></p>
+          </div>
+        </aside>
+
+        <aside class="panel-sheet" data-panel="contact" aria-hidden="true">
+          <div class="panel-sheet__inner">
+            <div class="panel-sheet__top">
+              <p class="panel-sheet__kicker">Contact</p>
+              <button class="panel-sheet__close" type="button" data-close-panel>Close</button>
+            </div>
+            <h2 class="panel-sheet__title" id="panel-contact-title">Contact</h2>
+            <p class="panel-sheet__intro" id="panel-contact-intro"></p>
+            <div class="contact-dossier" id="contact-dossier"></div>
+          </div>
+        </aside>
+
+        <aside class="panel-sheet" data-panel="cv" aria-hidden="true">
+          <div class="panel-sheet__inner">
+            <div class="panel-sheet__top">
+              <p class="panel-sheet__kicker">CV</p>
+              <button class="panel-sheet__close" type="button" data-close-panel>Close</button>
+            </div>
+            <h2 class="panel-sheet__title" id="panel-cv-title">CV / Dossier</h2>
+            <p class="panel-sheet__intro" id="panel-cv-intro"></p>
+            <div class="cv-dossier" id="cv-dossier"></div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="detail-layer" id="detail-layer" aria-hidden="true">
+        <button class="detail-layer__backdrop" type="button" data-close-detail aria-label="Close detail"></button>
+        <div class="detail-layer__shell" role="dialog" aria-modal="true" aria-label="Artwork detail">
+          <button class="detail-layer__close" type="button" data-close-detail>Close</button>
+          <button class="detail-layer__nav detail-layer__nav--prev" type="button" data-detail-nav="-1" aria-label="Previous">
+            ←
+          </button>
+          <figure class="detail-view">
+            <div class="detail-view__frame">
+              <img id="detail-image" src="" alt="">
+            </div>
+            <figcaption class="detail-view__caption">
+              <p class="detail-view__label" id="detail-label">Current Work</p>
+              <div class="detail-view__head">
+                <div>
+                  <h2 class="detail-view__title" id="detail-title"></h2>
+                  <p class="detail-view__title-zh" id="detail-title-zh"></p>
+                </div>
+                <p class="detail-view__count" id="detail-count"></p>
+              </div>
+              <p class="detail-view__line" id="detail-line"></p>
+            </figcaption>
+          </figure>
+          <button class="detail-layer__nav detail-layer__nav--next" type="button" data-detail-nav="1" aria-label="Next">
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="content.js?v=v142"></script>
+    <script src="site.js?v=v152"></script>
+    <script src="nav-transition.js?v=v154"></script>
+  </body>
+</html>
