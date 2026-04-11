@@ -704,13 +704,8 @@
     }
 
     if (elements.viewerImageHeart) {
-      elements.viewerImageHeart.src = work.image;
+      elements.viewerImageHeart.src = work.previewImage || work.image;
       elements.viewerImageHeart.alt = work.alt;
-    }
-
-    if (elements.heartFullscreenImage) {
-      elements.heartFullscreenImage.src = work.image;
-      elements.heartFullscreenImage.alt = work.alt;
     }
 
     if (elements.viewerTitle) {

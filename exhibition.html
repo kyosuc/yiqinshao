@@ -16,7 +16,7 @@
     >
     <link rel="stylesheet" href="styles.css?v=v156">
   </head>
-  <body data-page="subpage">
+  <body data-page="subpage" class="page-exhibition">
     <div class="subpage-shell">
       <header class="works-topbar">
         <a class="works-topbar__brand" href="index.html" aria-label="Back to Yiqin Shao home">
@@ -96,9 +96,18 @@
                 '<div class="exhibition-carousel__track" data-carousel-track>' +
                 images
                   .map(function (image, thumbIndex) {
+                    const isPrioritySlide = thumbIndex === 0;
                     return (
                       '<figure class="exhibition-carousel__slide">' +
-                      '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(titleText + " installation view " + String(thumbIndex + 1)) + '" loading="eager" decoding="async" draggable="false">' +
+                      '<img src="' +
+                      escapeHtml(image) +
+                      '" alt="' +
+                      escapeHtml(titleText + " installation view " + String(thumbIndex + 1)) +
+                      '" loading="' +
+                      (isPrioritySlide ? "eager" : "lazy") +
+                      '" fetchpriority="' +
+                      (isPrioritySlide ? "high" : "low") +
+                      '" decoding="async" draggable="false">' +
                       "</figure>"
                     );
                   })
